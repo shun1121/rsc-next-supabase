@@ -5,13 +5,13 @@ type Note = Database['public']['Tables']['notes']['Row']
 
 // data fetch用の関数
 async function fetchNotes() {
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000)) // 意図的にdata fetchに遅延を入れる。
   const res = await fetch(`${process.env.url}/rest/v1/notes?select=*`, {
     headers: new Headers({
       apikey: process.env.apikey as string
     }),
-    // cache: 'no-cache'
-    next: { revalidate: 10 },
+    cache: 'no-cache',
+    // next: { revalidate: 10 },
   })
   if(!res.ok) {
     throw new Error('Failed to fetch data in server')
